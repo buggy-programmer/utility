@@ -76,3 +76,44 @@ String.prototype.isNumber = function() {
 	if(this)
 		return numberRegex.test(this);
 };
+
+/**
+ * return selected text as string
+ */
+function getSelectedText() {
+	var txt = "",
+	win = window,
+	doc = document;
+	if(doc.getSelection)
+		txt = doc.getSelection();
+	else if(doc.selection)
+		txt = doc.selection.createRange().text;
+	else if(win.getSelection)
+		txt = win.getSelection();
+	return txt;
+}
+
+/**
+ * calls a function for every element of the array 
+ */
+function some (arr,fun) {
+  var len = arr.length;
+  if (typeof fun != "function")
+    throw new TypeError();
+
+  var that = arguments[1];
+  for (var l = 0; l < len; l++) {
+    if (l in arr && fun.call(that, arr[l], l, arr)) {
+		return true;
+	}
+  }
+  return false;
+}
+/**
+ * gets the difference between dates
+ */
+function getDateDifference(d1,d2) {
+	if(!(d1 || d2))
+		return false;
+	return (new Date(d1) - new Date(d2))/(1000*60*60*24);
+}
