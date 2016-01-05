@@ -117,3 +117,84 @@ function getDateDifference(d1,d2) {
 		return false;
 	return (new Date(d1) - new Date(d2))/(1000*60*60*24);
 }
+
+/**
+ * Function : getFormattedNumber
+ * Description : This function gets the formatted number(comma separated)
+ * @param currencyFormat if not null currency formatted will be prepended after formatting
+ * */
+Number.prototype.getFormattedNumber = function(currencyFormat) {
+	try {
+		var num = this;
+		if(num == 0)
+			return (currencyFormat != null) ? (currencyFormat + num) : num;
+		var cnum = num,
+		psplit;
+		if(num.toString().indexOf('.') != -1) {
+			psplit = num.toString().split('.'); 
+	    	cnum = psplit[0];
+		}
+		num = cnum.toString();
+		numArr = [],
+		numLength  = num.length,
+		numPart = Math.floor(numLength / 3),
+		n = num.length % 3 || 3;
+		for (var l = 0; l < numLength; l += n) {
+			if (l != 0) {
+				n = 3;
+			}
+			numArr[numArr.length] = num.substr(l, n);
+			numPart -= 1;
+	    } 
+	    // put chunks back together, separated by comma
+		num = numArr.join(',');
+		if(psplit && psplit[1] != null)
+			num = num + "." + psplit[1];
+		if(currencyFormat != null)
+			num = currencyFormat + num;
+		return num;
+	}
+	catch(e) {
+		console.log(e);
+	}
+}
+
+/**
+ * Description : This function is to get this optionValue of optionName based on keyName which has corresponding keyValue
+ * @param this is the this array
+ * @param keyName is the key name
+ * @param keyValue is the value of the key 
+ * @param optionName is the option name
+ * */
+Object.prototype.getObjectOptionValue = function(keyName, keyValue, optionName) {
+	try {
+		if(this && keyName && keyValue && optionName) {
+			if(Array.isArray(this)) {
+				for(var l = 0, objectLength = this.length; l < objectLength; l++) {
+					for(key in this[l]) {
+						if(Array.isArray(key)) {
+							key.getObjectOptionValue(keyName,keyValue,optionName);
+						}
+						else if(typeof (this[l][key]) === "object") {
+							if(this[l][keyName] == keyValue) {
+								if(this[l][key].hasOwnProperty(optionName)) {
+									return this[l][key][optionName];
+								}
+							}
+						}
+						else {
+							if(this[l].hasOwnProperty(keyName) && optionName == key) {
+								if(this[l][keyName] == keyValue)
+									return this[l][optionName];
+							}
+						}
+					}
+				}
+			}
+		}
+		else return false;
+	}
+	catch(e) {
+		console.log(e);
+	}
+}
