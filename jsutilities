@@ -260,3 +260,12 @@ function parseBoolean(val) {
 	return (val === "true");
 }
 
+function addDays(days) {
+    var today = new Date();
+    if(days == null || days == 0)
+        return today;
+    var newDate = new Date();
+    newDate.setDate(today.getDate() + days);
+    return newDate;
+}
+
