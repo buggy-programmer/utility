@@ -2,9 +2,9 @@
  * Trim the string and return the trimmed string
  */
 String.prototype.trim = function() {
-	if(!this)
-		return this;
-	return this.replace(/^\s+/,"").replace(/\s+$/,"");
+    if (!this)
+        return this;
+    return this.replace(/^\s+/, "").replace(/\s+$/, "");
 };
 
 /**
@@ -12,37 +12,37 @@ String.prototype.trim = function() {
  * ex. TEST_ABC -> testAbc, test-abc -> testAbc, test_abc-xyz -> testAbcXyz, test abc -> testAbc and so on.... 
  */
 String.prototype.toCamel = function() {
-	if(this)
-		return this.toLowerCase().replace(/([_\- ][a-zA-Z])/g, function($1) { 
-			return $1.toUpperCase();
-		}).replace(/[_\- ]/g,"");
+    if (this)
+        return this.toLowerCase().replace(/([_\- ][a-zA-Z])/g, function($1) {
+            return $1.toUpperCase();
+        }).replace(/[_\- ]/g, "");
 };
 
 /**
  * converts first letter of string to capital 
  */
-String.prototype.toUpperFirstLetter = function(){
-	if(this) {
-		var firstLetter = this.substr(0, 1);
-		return firstLetter.toUpperCase() + this.substr(1);
-	}
-	return this;
+String.prototype.toUpperFirstLetter = function() {
+    if (this) {
+        var firstLetter = this.substr(0, 1);
+        return firstLetter.toUpperCase() + this.substr(1);
+    }
+    return this;
 };
 
 /**
  * return the string in ellipses format after specified number of characters
  * params noOfCharacter numeric 
  */
-String.prototype.ellipses = function (noOfCharacter) {
-	if(!this)
-		return false;
-	noOfCharacter = (noOfCharacter && noOfCharacter !== '') ? noOfCharacter : 20;
-	var modifiedString = this;
-	if (this.length > noOfCharacter) {
-		modifiedString = this.slice(0, noOfCharacter);
-		modifiedString = modifiedString + '...';
-	}
-	return modifiedString;
+String.prototype.ellipses = function(noOfCharacter) {
+    if (!this)
+        return false;
+    noOfCharacter = (noOfCharacter && noOfCharacter !== '') ? noOfCharacter : 20;
+    var modifiedString = this;
+    if (this.length > noOfCharacter) {
+        modifiedString = this.slice(0, noOfCharacter);
+        modifiedString = modifiedString + '...';
+    }
+    return modifiedString;
 };
 
 /**
@@ -50,8 +50,8 @@ String.prototype.ellipses = function (noOfCharacter) {
  */
 String.prototype.getExtension = function() {
     var parts = this.split('.');
-    if(parts.length >= 1)
-    	return parts[parts.length - 1].toLowerCase();
+    if (parts.length >= 1)
+        return parts[parts.length - 1].toLowerCase();
 };
 
 /**
@@ -59,63 +59,63 @@ String.prototype.getExtension = function() {
  * @params param 
  */
 String.prototype.getURLParam = function(param) {
-	if(!(param && this)) 
-		return null;
-	var paramIndex = this.indexOf(param);
-	var value = paramIndex != -1 ? this.substring(paramIndex + param.length + 1) : "";
-	var endIndex = value.indexOf("&") != -1 ? value.indexOf("&") : value.length;
-	value = value.substring(0,endIndex) || "";
-	return value;
+    if (!(param && this))
+        return null;
+    var paramIndex = this.indexOf(param);
+    var value = paramIndex != -1 ? this.substring(paramIndex + param.length + 1) : "";
+    var endIndex = value.indexOf("&") != -1 ? value.indexOf("&") : value.length;
+    value = value.substring(0, endIndex) || "";
+    return value;
 }
 
 /**
  * return whether string is number or not
  */
 String.prototype.isNumber = function() {
-	var numberRegex = /^[\+\-]?([0-9]*)[.]?([0-9]{1,})$/;
-	if(this)
-		return numberRegex.test(this);
+    var numberRegex = /^[\+\-]?([0-9]*)[.]?([0-9]{1,})$/;
+    if (this)
+        return numberRegex.test(this);
 };
 
 /**
  * return selected text as string
  */
 function getSelectedText() {
-	var txt = "",
-	win = window,
-	doc = document;
-	if(doc.getSelection)
-		txt = doc.getSelection();
-	else if(doc.selection)
-		txt = doc.selection.createRange().text;
-	else if(win.getSelection)
-		txt = win.getSelection();
-	return txt;
+    var txt = "",
+        win = window,
+        doc = document;
+    if (doc.getSelection)
+        txt = doc.getSelection();
+    else if (doc.selection)
+        txt = doc.selection.createRange().text;
+    else if (win.getSelection)
+        txt = win.getSelection();
+    return txt;
 }
 
 /**
  * calls a function for every element of the array 
  */
-function some (arr,fun) {
-  var len = arr.length;
-  if (typeof fun != "function")
-    throw new TypeError();
+function some(arr, fun) {
+    var len = arr.length;
+    if (typeof fun != "function")
+        throw new TypeError();
 
-  var that = arguments[1];
-  for (var l = 0; l < len; l++) {
-    if (l in arr && fun.call(that, arr[l], l, arr)) {
-		return true;
-	}
-  }
-  return false;
+    var that = arguments[1];
+    for (var l = 0; l < len; l++) {
+        if (l in arr && fun.call(that, arr[l], l, arr)) {
+            return true;
+        }
+    }
+    return false;
 }
 /**
  * gets the difference between dates
  */
-function getDateDifference(d1,d2) {
-	if(!(d1 || d2))
-		return false;
-	return (new Date(d1) - new Date(d2))/(1000*60*60*24);
+function getDateDifference(d1, d2) {
+    if (!(d1 || d2))
+        return false;
+    return (new Date(d1) - new Date(d2)) / (1000 * 60 * 60 * 24);
 }
 
 /**
@@ -124,39 +124,38 @@ function getDateDifference(d1,d2) {
  * @param currencyFormat if not null currency formatted will be prepended after formatting
  * */
 Number.prototype.getFormattedNumber = function(currencyFormat) {
-	try {
-		var num = this;
-		if(num == 0)
-			return (currencyFormat != null) ? (currencyFormat + num) : num;
-		var cnum = num,
-		psplit;
-		if(num.toString().indexOf('.') != -1) {
-			psplit = num.toString().split('.'); 
-	    	cnum = psplit[0];
-		}
-		num = cnum.toString();
-		numArr = [],
-		numLength  = num.length,
-		numPart = Math.floor(numLength / 3),
-		n = num.length % 3 || 3;
-		for (var l = 0; l < numLength; l += n) {
-			if (l != 0) {
-				n = 3;
-			}
-			numArr[numArr.length] = num.substr(l, n);
-			numPart -= 1;
-	    } 
-	    // put chunks back together, separated by comma
-		num = numArr.join(',');
-		if(psplit && psplit[1] != null)
-			num = num + "." + psplit[1];
-		if(currencyFormat != null)
-			num = currencyFormat + num;
-		return num;
-	}
-	catch(e) {
-		console.log(e);
-	}
+    try {
+        var num = this;
+        if (num == 0)
+            return (currencyFormat != null) ? (currencyFormat + num) : num;
+        var cnum = num,
+            psplit;
+        if (num.toString().indexOf('.') != -1) {
+            psplit = num.toString().split('.');
+            cnum = psplit[0];
+        }
+        num = cnum.toString();
+        numArr = [],
+            numLength = num.length,
+            numPart = Math.floor(numLength / 3),
+            n = num.length % 3 || 3;
+        for (var l = 0; l < numLength; l += n) {
+            if (l != 0) {
+                n = 3;
+            }
+            numArr[numArr.length] = num.substr(l, n);
+            numPart -= 1;
+        }
+        // put chunks back together, separated by comma
+        num = numArr.join(',');
+        if (psplit && psplit[1] != null)
+            num = num + "." + psplit[1];
+        if (currencyFormat != null)
+            num = currencyFormat + num;
+        return num;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 /**
@@ -167,105 +166,104 @@ Number.prototype.getFormattedNumber = function(currencyFormat) {
  * @param optionName is the option name
  * */
 Object.prototype.getObjectOptionValue = function(keyName, keyValue, optionName) {
-	try {
-		if(this && keyName && keyValue && optionName) {
-			if(Array.isArray(this)) {
-				for(var l = 0, objectLength = this.length; l < objectLength; l++) {
-					for(key in this[l]) {
-						if(Array.isArray(key)) {
-							key.getObjectOptionValue(keyName,keyValue,optionName);
-						}
-						else if(typeof (this[l][key]) === "object") {
-							if(this[l][keyName] == keyValue) {
-								if(this[l][key].hasOwnProperty(optionName)) {
-									return this[l][key][optionName];
-								}
-							}
-						}
-						else {
-							if(this[l].hasOwnProperty(keyName) && optionName == key) {
-								if(this[l][keyName] == keyValue)
-									return this[l][optionName];
-							}
-						}
-					}
-				}
-			}
-		}
-		else return false;
-	}
-	catch(e) {
-		console.log(e);
-	}
+    try {
+        if (this && keyName && keyValue && optionName) {
+            if (Array.isArray(this)) {
+                for (var l = 0, objectLength = this.length; l < objectLength; l++) {
+                    for (key in this[l]) {
+                        if (Array.isArray(key)) {
+                            key.getObjectOptionValue(keyName, keyValue, optionName);
+                        } else if (typeof(this[l][key]) === "object") {
+                            if (this[l][keyName] == keyValue) {
+                                if (this[l][key].hasOwnProperty(optionName)) {
+                                    return this[l][key][optionName];
+                                }
+                            }
+                        } else {
+                            if (this[l].hasOwnProperty(keyName) && optionName == key) {
+                                if (this[l][keyName] == keyValue)
+                                    return this[l][optionName];
+                            }
+                        }
+                    }
+                }
+            }
+        } else return false;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 Number.Prototype.isValidCreditCard = function() {
-	try {
-		var num = parseInt(this);
-		return (/^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/).test(num);
-	}
-	catch(e) {
-		return 'Invalid Credit Card Number';
-	}
+    try {
+        var num = parseInt(this);
+        return (/^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/).test(num);
+    } catch (e) {
+        return 'Invalid Credit Card Number';
+    }
 }
 
 Number.Prototype.getCardType = function() {
-	try {
-		var number = parseInt(this);
-		var re = {
-			visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
-			mastercard: /^5[1-5][0-9]{14}$/,
-			amex: /^3[47][0-9]{13}$/,
-			diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
-			discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
-			jcb: /^(?:2131|1800|35\d{3})\d{11}$/
-		};
-		if (re.visa.test(number)) {
-			return 'visa';
-		} else if (re.mastercard.test(number)) {
-			return 'mastercard';
-		} else if (re.amex.test(number)) {
-			return 'amex';
-		} else if (re.diners.test(number)) {
-			return 'diners';
-		} else if (re.discover.test(number)) {
-			return 'discover';
-		} else if (re.jcb.test(number)) {
-			return 'jcb';
-		}
-	}
-	catch(e) {
-		return 'Invalid number';
-	}
+    try {
+        var number = parseInt(this);
+        var re = {
+            visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+            mastercard: /^5[1-5][0-9]{14}$/,
+            amex: /^3[47][0-9]{13}$/,
+            diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
+            discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+            jcb: /^(?:2131|1800|35\d{3})\d{11}$/
+        };
+        if (re.visa.test(number)) {
+            return 'visa';
+        } else if (re.mastercard.test(number)) {
+            return 'mastercard';
+        } else if (re.amex.test(number)) {
+            return 'amex';
+        } else if (re.diners.test(number)) {
+            return 'diners';
+        } else if (re.discover.test(number)) {
+            return 'discover';
+        } else if (re.jcb.test(number)) {
+            return 'jcb';
+        }
+    } catch (e) {
+        return 'Invalid number';
+    }
 }
 
 Number.Prototype.isSecurityCodeValid = function() {
-	try {
-		var num = parseInt(this);
-		return (/^\d{3,4}/).test(num);
-	}
-	catch(e) {
-		return 'Invalid Security Code Number';
-	}
+    try {
+        var num = parseInt(this);
+        return (/^\d{3,4}/).test(num);
+    } catch (e) {
+        return 'Invalid Security Code Number';
+    }
 }
+
+/* 
+* Parse Boolean value
+*/
 
 function parseBoolean(val) {
-	if(!val) {
-		return false;
-    	}
-    	if(typeof val == "boolean") {
-		return val;
-	}
-    	val = val.toLowerCase();
-	return (val === "true");
+    if (!val) {
+        return false;
+    }
+    if (typeof val == "boolean") {
+        return val;
+    }
+    val = val.toLowerCase();
+    return (val === "true");
 }
 
+/* 
+* Add days to todays date
+*/
 function addDays(days) {
     var today = new Date();
-    if(days == null || days == 0)
+    if (days == null || days == 0)
         return today;
     var newDate = new Date();
     newDate.setDate(today.getDate() + days);
     return newDate;
 }
-
